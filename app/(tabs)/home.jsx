@@ -26,7 +26,6 @@ export default function home() {
         <Text>Rp. 456.000.000</Text>
         <Text>105.000 KM</Text>
       </View>
-      {/* You can repeat the card structure for additional cars */}
     </ScrollView>
   </View>
   )
