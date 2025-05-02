@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   View,
   Text,
@@ -11,7 +11,6 @@ import {
 import { Colors } from '../../constants/Colors'; 
 import { Ionicons } from '@expo/vector-icons';
 import carPlaceholder from '../../assets/images/car-placeholder.png';
-
 
 const dummyCars = [
   {
@@ -31,6 +30,21 @@ const dummyCars = [
 ];
 
 export default function Home() {
+  const [searchQuery, setSearchQuery] = useState('');
+  const [filteredCars, setFilteredCars] = useState(dummyCars);
+
+  const handleSearch = (query) => {
+    setSearchQuery(query);
+    if (query.trim() === '') {
+      setFilteredCars(dummyCars);
+    } else {
+      const filtered = dummyCars.filter((car) =>
+        car.title.toLowerCase().includes(query.toLowerCase())
+      );
+      setFilteredCars(filtered);
+    }
+  };
+
   return (
     <View style={styles.container}>
       {/* Top Section */}
@@ -51,12 +65,14 @@ export default function Home() {
           style={styles.searchBar}
           placeholder="Looking for a car?"
           placeholderTextColor={Colors.text}
+          value={searchQuery}
+          onChangeText={handleSearch}
         />
       </View>
 
       {/* Car Cards */}
       <ScrollView showsVerticalScrollIndicator={false}>
-        {dummyCars.map((car) => (
+        {filteredCars.map((car) => (
           <View key={car.id} style={styles.card}>
             <Image source={car.image} style={styles.image} />
             <Text style={styles.carTitle}>{car.title}</Text>
