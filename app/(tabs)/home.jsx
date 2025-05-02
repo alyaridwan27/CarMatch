@@ -1,71 +1,156 @@
-import { View, Text, TextInput, Button, ScrollView, StyleSheet, Image } from 'react-native'
-import React from 'react'
+import React from 'react';
+import {
+  View,
+  Text,
+  TextInput,
+  ScrollView,
+  StyleSheet,
+  Image,
+  TouchableOpacity,
+} from 'react-native';
+import { Colors } from '../../constants/Colors'; 
+import { Ionicons } from '@expo/vector-icons';
+import carPlaceholder from '../../assets/images/car-placeholder.png';
 
-export default function home() {
+
+const dummyCars = [
+  {
+    id: '1',
+    title: '2022 Honda CRV',
+    price: 'Rp. 456.000.000',
+    km: '105.000 KM',
+    image: carPlaceholder,
+  },
+  {
+    id: '2',
+    title: '2015 Toyota Fortuner',
+    price: 'Rp. 170.000.000',
+    km: '95.000 KM',
+    image: carPlaceholder,
+  },
+];
+
+export default function Home() {
   return (
     <View style={styles.container}>
-    {/* Top Section */}
-    <View style={styles.topSection}>
-      <View style={styles.location}>
-        <Text>Your Location: Jakarta, Indonesia</Text>
+      {/* Top Section */}
+      <View style={styles.topSection}>
+        <View style={styles.location}>
+          <Ionicons name="location-outline" size={18} color={Colors.text} />
+          <Text style={styles.locationText}>Jakarta, Indonesia</Text>
+        </View>
+        <TouchableOpacity style={styles.listingButton}>
+          <Text style={styles.listingText}>My Listing</Text>
+        </TouchableOpacity>
       </View>
-      <Button title="My Listing" />
-    </View>
 
-    {/* Search Bar */}
-    <TextInput 
-      style={styles.searchBar} 
-      placeholder="Looking for a car?" 
-    />
-    
-    {/* Car Cards Section */}
-    <ScrollView>
-      <View style={styles.card}>
-        <Image source={{uri: 'placeholder_image_url'}} style={styles.image} />
-        <Text>2022 Honda CRV</Text>
-        <Text>Rp. 456.000.000</Text>
-        <Text>105.000 KM</Text>
+      {/* Search Bar */}
+      <View style={styles.searchWrapper}>
+        <Ionicons name="search-outline" size={18} color={Colors.text} />
+        <TextInput
+          style={styles.searchBar}
+          placeholder="Looking for a car?"
+          placeholderTextColor={Colors.text}
+        />
       </View>
-    </ScrollView>
-  </View>
-  )
+
+      {/* Car Cards */}
+      <ScrollView showsVerticalScrollIndicator={false}>
+        {dummyCars.map((car) => (
+          <View key={car.id} style={styles.card}>
+            <Image source={car.image} style={styles.image} />
+            <Text style={styles.carTitle}>{car.title}</Text>
+            <Text style={styles.carDetail}>{car.km}</Text>
+            <Text style={styles.carPrice}>{car.price}</Text>
+          </View>
+        ))}
+      </ScrollView>
+    </View>
+  );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#000',
+    backgroundColor: Colors.background,
+    paddingHorizontal: 16,
+    paddingTop: 40,
   },
   topSection: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    padding: 10,
+    alignItems: 'center',
+    marginBottom: 16,
   },
   location: {
-    flex: 1,
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  locationText: {
+    fontFamily: 'outfit',
+    fontSize: 14,
+    marginLeft: 6,
+    color: Colors.text,
+  },
+  listingButton: {
+    backgroundColor: Colors.primary,
+    paddingVertical: 6,
+    paddingHorizontal: 12,
+    borderRadius: 6,
+  },
+  listingText: {
+    fontFamily: 'outfit-bold',
+    fontSize: 14,
+    color: Colors.WHITE,
+  },
+  searchWrapper: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: Colors.secondary,
+    paddingHorizontal: 10,
+    borderRadius: 10,
+    marginBottom: 20,
   },
   searchBar: {
-    backgroundColor: '#fff',
-    borderRadius: 5,
-    margin: 10,
-    padding: 10,
+    flex: 1,
+    fontFamily: 'outfit',
+    fontSize: 14,
+    paddingVertical: 10,
+    marginLeft: 8,
+    color: Colors.text,
   },
   card: {
-    backgroundColor: '#fff',
-    margin: 10,
-    borderRadius: 10,
-    padding: 10,
+    backgroundColor: Colors.WHITE,
+    borderRadius: 12,
+    padding: 12,
+    marginBottom: 16,
+    shadowColor: Colors.BLACK,
+    shadowOpacity: 0.05,
+    shadowOffset: { width: 0, height: 1 },
+    shadowRadius: 4,
+    elevation: 3,
   },
   image: {
     width: '100%',
-    height: 200,
-    backgroundColor: '#ddd', 
+    height: 180,
     borderRadius: 10,
+    marginBottom: 10,
   },
-  navBar: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    padding: 10,
-    backgroundColor: '#fff',
+  carTitle: {
+    fontFamily: 'outfit-bold',
+    fontSize: 16,
+    marginBottom: 4,
+    color: Colors.text,
+  },
+  carDetail: {
+    fontFamily: 'outfit',
+    fontSize: 13,
+    color: Colors.text,
+  },
+  carPrice: {
+    fontFamily: 'outfit-bold',
+    fontSize: 15,
+    color: Colors.text,
+    marginTop: 4,
   },
 });
