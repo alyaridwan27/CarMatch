@@ -1,9 +1,15 @@
 import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native'
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Colors } from './../constants/Colors'
-import {useRouter} from 'expo-router'
+import {useNavigation, useRouter} from 'expo-router'
 
 export default function Login() {
+    const navgation=useNavigation();
+    useEffect(()=>{
+        navgation.setOptions({
+          headerShown:false
+        })
+      },[]);
     const router=useRouter();
   return (
     <View>
