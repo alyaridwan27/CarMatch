@@ -97,7 +97,7 @@ export default function AddPostScreen() {
     if (!input) return setSuggestions([]);
     try {
       const res = await fetch(
-        `https://maps.googleapis.com/maps/api/place/autocomplete/json?input=${input}&key=AIzaSyAVqy5-Eb3LACbATtpo8IHenp6mx8wMFeI`
+        `https://maps.googleapis.com/maps/api/place/autocomplete/json?input=${input}&key=APIKEY`
       );
       const json = await res.json();
       setSuggestions(json.predictions || []);
@@ -108,7 +108,7 @@ export default function AddPostScreen() {
 
   const fetchPlaceDetails = async (placeId) => {
     const res = await fetch(
-      `https://maps.googleapis.com/maps/api/place/details/json?place_id=${placeId}&key=AIzaSyAVqy5-Eb3LACbATtpo8IHenp6mx8wMFeI`
+      `https://maps.googleapis.com/maps/api/place/details/json?place_id=${placeId}&key=APIKEY`
     );
     const json = await res.json();
     return json.result;
